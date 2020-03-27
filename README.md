@@ -3,6 +3,8 @@ This is an Omnet++ project written in C describing different scheduling algorith
 This project was realised with **_omnetpp-5.5.1_** Windows version. (Linux distributions may prove problematic)
 Code inspiration was provided by existing samples in the omnetpp folder and user manual.
 
+C files can be found in the _src_ folder. Network file that needs to be simulated can be found in the _simulations_ folder.
+
 ## Describing the system
 
 Each algorithm supposes we have 3 Users, each of which having a queue(FIFO) with package self-generation every *1ms*.
