@@ -1,0 +1,30 @@
+file 858 1585305548                                             
+version 2
+run General-0-20200327-12:38:57-1972
+attr configname General
+attr datetime 20200327-12:38:57
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network LTE_Scheduler
+attr processid 1972
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param LTE_Scheduler.User_1.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_2.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_3.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_1.fuzzy_timer.fuzzyPeriod "10 ms"
+param LTE_Scheduler.User_2.fuzzy_timer.fuzzyPeriod "10 ms"
+param LTE_Scheduler.User_3.fuzzy_timer.fuzzyPeriod "10 ms"
+
+vector 0 LTE_Scheduler.User_1.queue "" ETV
+0	782 10 29 29 0 0 1 1 1 1 1
+vector 1 LTE_Scheduler.User_2.queue "" ETV
+1	836 10 40 40 0 0 1 2 2 2 4
+1	846 10 49 49 1 1 1 2 2 2 4
+
