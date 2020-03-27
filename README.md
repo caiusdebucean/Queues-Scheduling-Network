@@ -1,9 +1,7 @@
 # Queues-Scheduling-Network
-This is an Omnet++ project written in C++ describing different scheduling algorithms for a network of queues(FIFOs).
+This is an Omnet++ project written in C describing different scheduling algorithms for a network of queues(FIFOs).
 This project was realised with **_omnetpp-5.5.1_** Windows version. (Linux distributions may prove problematic)
 Code inspiration was provided by existing samples in the omnetpp folder and user manual.
-
-C++ files can be found in the _src_ folder. Network file that needs to be simulated can be found in the _simulations_ folder.
 
 ## Describing the system
 
@@ -50,4 +48,16 @@ This works as the _Weighted Round Robin Scheduler_ described above, but it is no
 ## Running the project
 Make sure you have the correct version of omnet++ mentioned above. Choose a scheduling method through the _scheduleMethod_ variable, comment and uncomment the necessary lines in _omnetpp.ini_, and while you have that file window opened and selected, press the _Run simulations_ button.
 
+## Understanding the simulations
+![Alt Text](https://media.giphy.com/media/d7TYfGxcqzrcwk1K02/giphy.gif)
+
+The above gif represents a rundown of the Fuzzy Logic Scheduler. Here is some explanation:
+
+![Simulation explanation](https://i.imgur.com/HWYThPE.png)
+
+The other scheduling algorithms are more straight forward and make use of the _emptyQueue_, which transmits the queue status.
+
 P.S.: This is a slightly messy project, as there are redundant variables that are passed around and are irrelevant to some algorithm methods, but removing them would not allow the code to be multi-purpose, as omnet++ does not provide a very flexible environment.
+
+<div>&copy;Debucean Caius-Ioan @ <b>github.com/caiusdebucean</b></div>
+
