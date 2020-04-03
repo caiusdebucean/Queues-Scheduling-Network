@@ -87,13 +87,7 @@ Make sure you have the correct version of omnet++ mentioned above. Choose a sche
 ## Understanding the simulations
 ![Alt Text](https://media.giphy.com/media/d7TYfGxcqzrcwk1K02/giphy.gif)
 
-<<<<<<< HEAD
 The above gif represents a rundown of the *Error-Weighted Round Robin Scheduler*. Here is some explanation:
-||||||| merged common ancestors
-The above gif represents a rundown of the Fuzzy Logic Scheduler. Here is some explanation:
-=======
-The above gif represents a rundown of the Fuzzy Logic Scheduler (**incomplete but working on a simplified version**). Here is some explanation to the current version:
->>>>>>> a9e64a8ac5e20f80b17b7a70f3ca4a55bdb85775
 
 ![Simulation explanation](https://i.imgur.com/HWYThPE.png)
 **TO BE MENTIONED: The above method is not a Fuzzy Logic Controller. It has fuzzy-names because the code used for this method was meant to be a FLC, but later repurposed into the Error-Weighted Round Robin Scheduler. This will be patched in a future version.**
