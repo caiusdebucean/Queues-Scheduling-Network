@@ -21,8 +21,8 @@ The generation period and packet transfer period is described in _omnetpp.ini_.
 However, due to omnet++ limitations, the **scheduling algorithm** is chosen in the LTE_sched.net file in the _scheduleMethod_ variable.
 
 ## Scheduling Methods
-### Fuzzy Logic Scheduler (not quite fuzzy yet)
-**This schedulig methid is a simplified incomplete version of a Fuzzy Scheduler, but it works as intended up until now. To be modified)
+### Fuzzy Logic Scheduler
+
 To choose this _algorithm_, modify accordingly:
 >scheduleMethod = 4;
 
