@@ -37,11 +37,13 @@ OBJS = \
     $O/Sink.o \
     $O/Source.o \
     $O/User.o \
-    $O/IntPackage_m.o
+    $O/IntPackage_m.o \
+    $O/MultiplePackets_m.o
 
 # Message files
 MSGFILES = \
-    IntPackage.msg
+    IntPackage.msg \
+    MultiplePackets.msg
 
 # SM files
 SMFILES =

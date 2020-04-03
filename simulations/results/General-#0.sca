@@ -1,0 +1,50 @@
+version 2
+run General-0-20200403-20:00:43-12968
+attr configname General
+attr datetime 20200403-20:00:43
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network LTE_Scheduler
+attr processid 12968
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param LTE_Scheduler.User_1.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_2.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_3.generator.generatorPeriod "1 ms"
+param LTE_Scheduler.User_1.fuzzy_timer.fuzzyPeriod "20 ms"
+param LTE_Scheduler.User_2.fuzzy_timer.fuzzyPeriod "20 ms"
+param LTE_Scheduler.User_3.fuzzy_timer.fuzzyPeriod "20 ms"
+
+scalar LTE_Scheduler.sink lifetime:mean nan
+attr interpolationmode none
+attr title "lifetime of arrived jobs, mean"
+attr unit s
+scalar LTE_Scheduler.sink lifetime:max nan
+attr interpolationmode none
+attr title "lifetime of arrived jobs, max"
+attr unit s
+scalar LTE_Scheduler.User_1.queue qlen:timeavg nan
+attr interpolationmode sample-hold
+attr title "queue length, timeavg"
+scalar LTE_Scheduler.User_1.queue qlen:max nan
+attr interpolationmode sample-hold
+attr title "queue length, max"
+scalar LTE_Scheduler.User_2.queue qlen:timeavg nan
+attr interpolationmode sample-hold
+attr title "queue length, timeavg"
+scalar LTE_Scheduler.User_2.queue qlen:max nan
+attr interpolationmode sample-hold
+attr title "queue length, max"
+scalar LTE_Scheduler.User_3.queue qlen:timeavg nan
+attr interpolationmode sample-hold
+attr title "queue length, timeavg"
+scalar LTE_Scheduler.User_3.queue qlen:max nan
+attr interpolationmode sample-hold
+attr title "queue length, max"
+

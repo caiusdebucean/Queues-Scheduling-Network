@@ -2,12 +2,16 @@
 #include "Utils.h"
 #include <omnetpp/ccomponent.h>
 #include "IntPackage_m.h"
+#include "MultiplePackets_m.h"
+
+#define SIMTIME_DBL(t) ((t).dbl())
 
 using namespace omnetpp;
 
 class Fifo : public cSimpleModule {
 private:
     cMessage *sendEvent;
+    cMessage *customNrEvent;
     cQueue queue;
     int total;
     int errors;
@@ -15,6 +19,11 @@ private:
     bool queueClear;
     cOutVector delayInfo;
     int error_rate;
+    int nrToSend;
+    int userID;
+    int i;
+    double tmpTime;
+    double tmpId;
 public:
     Fifo();
     virtual ~Fifo();
@@ -41,11 +50,13 @@ Fifo::~Fifo() {
 
 void Fifo::initialize() {
     sendEvent = new cMessage("initialized");
+    customNrEvent = new cMessage("multiplePackets");
+    customNrEvent->setKind(TYPE::MULTIPLE_PACKETS_SEQUENCE);
     queueClear = true;
     errors = 0;
     total = 0;
     fuzzyError = 0;
-    error_rate = 40;
+    error_rate = 20;
 }
 
 void Fifo::sendEmptyMessage() {
@@ -56,8 +67,58 @@ void Fifo::sendEmptyMessage() {
 
 
 void Fifo::handleMessage(cMessage *msg) {
-    if (msg->arrivedOn("rxScheduling"))
+    if (msg->arrivedOn("rxScheduling") || msg->getKind() == TYPE::MULTIPLE_PACKETS_SEQUENCE)
     {
+    if ((msg->getKind() == TYPE::MULTIPLE_PACKETS_FROM_ONE_MSG))
+        {
+        //reset errors and total
+        errors=0;
+        total=0;
+        fuzzyError = 0;
+        //reset errors and total
+
+        nrToSend = ((MultiplePackets*)msg)->getPacketsToSend();
+        userID = ((MultiplePackets*)msg)->getId();
+        tmpTime = 3;
+        tmpId = (double)userID;
+        i=1;
+        customNrEvent = new cMessage("multiplePackets");
+        customNrEvent->setKind(TYPE::MULTIPLE_PACKETS_SEQUENCE);
+        scheduleAt(simTime()+tmpTime-tmpId+((double)i), customNrEvent);
+        i++;
+        }
+    else if ((msg->getKind() == TYPE::MULTIPLE_PACKETS_SEQUENCE))
+        {
+        if(i<=nrToSend)
+            {
+            customNrEvent = new cMessage("multiplePackets");
+            customNrEvent->setKind(TYPE::MULTIPLE_PACKETS_SEQUENCE);
+            scheduleAt(simTime()+1, customNrEvent);
+            i++;
+            }
+
+        cMessage *message = static_cast<cMessage*>(queue.pop());
+        auto delay = (simTime() - message->getArrivalTime()).dbl();
+        delayInfo.recordWithTimestamp(message->getArrivalTime(), delay);
+
+        int random = intrand(100);
+        if (random > error_rate)
+            {
+            message->setKind(ERROR::IS_NOT_ERROR);
+            message->setName("NOT_ERROR");
+            }
+        else
+            {
+            message->setKind(ERROR::IS_ERROR);
+            message->setName("ERROR");
+            errors = errors + 1;
+            }
+
+        total = total + 1;
+        send(message, "txPackets");
+        }
+    else
+        {
         cancelAndDelete(msg);
 
         if (queue.isEmpty()) {
@@ -87,6 +148,7 @@ void Fifo::handleMessage(cMessage *msg) {
 
         if (queue.isEmpty()) //IF AFTER POP IS EMPTY
             sendEmptyMessage();
+        }
     }
     else if (msg->arrivedOn("itsFuzzyTime"))
     {
@@ -97,18 +159,12 @@ void Fifo::handleMessage(cMessage *msg) {
         else
             fuzzyError = 0;
 
-//        (char *) msg = ((const char *)fuzzyError);
-//        char *a = fuzzyError;
-//        a[0] = static_cast<char*>(a);
-//        const char *msg = a;
-//        cMessage *msgFuzzyErrorNumber = new cMessage(std::to_string(fuzzyError));
-//        cMessage *msgFuzzyErrorNumber = new cMessage("problemeBoss");
-//        msgFuzzyErrorNumber->setName(msg);
         IntPackage *msg = new IntPackage("fuzzyStuff");
         msg->setFuzzy_value(fuzzyError);
         msg->setError_value(errors);
         msg->setTotal_value(total);
-        send(msg, "fuzzyErrorNumber");
+        if (simTime() != 0)
+            send(msg, "fuzzyErrorNumber");
     }
     else
     {
@@ -116,7 +172,7 @@ void Fifo::handleMessage(cMessage *msg) {
 
     queue.insert(msg);
 
-        if (queueClear)
+        if (queueClear && simTime()!= 0 )
         {
         cMessage *msgQueueStatus = new cMessage("queueNotEmpty");
         msgQueueStatus->setKind(QUEUE::IS_NOT_EMPTY);
